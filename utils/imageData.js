@@ -19,36 +19,36 @@ const generateImageData = () => {
 
   // Define image collections by category to ensure realistic images for each
   const bocetosUrls = [
-    "/1.webp",
-    "/2.webp",
-    "/3.webp",
-    "/4.webp",
-    "/5.webp",
-    "/6.webp",
-    "/7.webp",
-    "/8.webp",
-    "/9.webp",
-    "/10.webp",
-    "/11.webp",
-    "/12.webp",
-    "/13.webp",
-    "/14.webp",
-    "/15.webp",
-    "/16.webp",
-    "/17.webp",
-    "/18.webp",
-    "/19.webp",
-    "/20.webp",
-    "/21.webp",
-    "/22.webp",
-    "/23.webp",
-    "/24.webp",
-    "/25.webp",
-    "/26.webp",
-    "/27.webp",
-    "/28.webp",
-    "/29.webp",
-    "/30.webp",
+    "./public/1.webp",
+    "./public/2.webp",
+    "./public/3.webp",
+    "./public/4.webp",
+    "./public/5.webp",
+    "./public/6.webp",
+    "./public/7.webp",
+    "./public/8.webp",
+    "./public/9.webp",
+    "./public/10.webp",
+    "./public/11.webp",
+    "./public/12.webp",
+    "./public/13.webp",
+    "./public/14.webp",
+    "./public/15.webp",
+    "./public/16.webp",
+    "./public/17.webp",
+    "./public/18.webp",
+    "./public/19.webp",
+    "./public/20.webp",
+    "./public/21.webp",
+    "./public/22.webp",
+    "./public/23.webp",
+    "./public/24.webp",
+    "./public/25.webp",
+    "./public/26.webp",
+    "./public/27.webp",
+    "./public/28.webp",
+    "./public/29.webp",
+    "./public/30.webp",
   ];
 
   const obrasVentaUrls = [
@@ -111,7 +111,7 @@ const generateImageData = () => {
 const imageData = [
   {
     id: 1,
-    url: "/1.webp",
+    url: "./public/1.webp",
     title: "Ilusión",
     category: "bocetos",
     height: "384px",
@@ -119,7 +119,7 @@ const imageData = [
   },
   {
     id: 2,
-    url: "/2.webp",
+    url: "./public/2.webp",
     title: "La Dama",
     category: "bocetos",
     height: "298px",
@@ -127,7 +127,7 @@ const imageData = [
   },
   {
     id: 3,
-    url: "/3.webp",
+    url: "./public/3.webp",
     title: "Abuelo",
     category: "bocetos",
     height: "472px",
@@ -135,7 +135,7 @@ const imageData = [
   },
   {
     id: 4,
-    url: "/4.webp",
+    url: "./public/4.webp",
     title: "",
     category: "bocetos",
     height: "223px",
@@ -143,7 +143,7 @@ const imageData = [
   },
   {
     id: 5,
-    url: "/5.webp",
+    url: "./public/5.webp",
     title: "Potro Rodrigo",
     category: "bocetos",
     height: "408px",
@@ -151,7 +151,7 @@ const imageData = [
   },
   {
     id: 6,
-    url: "/6.webp",
+    url: "./public/6.webp",
     title: "Lionel Messi",
     category: "bocetos",
     height: "261px",
@@ -159,7 +159,7 @@ const imageData = [
   },
   {
     id: 7,
-    url: "/7.webp",
+    url: "./public/7.webp",
     title: "Cristiano Ronaldo",
     category: "bocetos",
     height: "386px",
@@ -167,7 +167,7 @@ const imageData = [
   },
   {
     id: 8,
-    url: "/8.webp",
+    url: "./public/8.webp",
     title: "Chaqueño Palavecino",
     category: "bocetos",
     height: "243px",
@@ -175,7 +175,7 @@ const imageData = [
   },
   {
     id: 9,
-    url: "/9.webp",
+    url: "./public/9.webp",
     title: "",
     category: "bocetos",
     height: "445px",
@@ -183,7 +183,7 @@ const imageData = [
   },
   {
     id: 10,
-    url: "/10.webp",
+    url: "./public/10.webp",
     title: "",
     category: "bocetos",
     height: "410px",
@@ -191,7 +191,7 @@ const imageData = [
   },
   {
     id: 11,
-    url: "/11.webp",
+    url: "./public/11.webp",
     title: "",
     category: "bocetos",
     height: "248px",
@@ -199,7 +199,7 @@ const imageData = [
   },
   {
     id: 12,
-    url: "/12.webp",
+    url: "./public/12.webp",
     title: "La Negra Sosa",
     category: "bocetos",
     height: "488px",
@@ -207,7 +207,7 @@ const imageData = [
   },
   {
     id: 13,
-    url: "/13.webp",
+    url: "./public/13.webp",
     title: "Wos",
     category: "bocetos",
     height: "289px",
@@ -215,7 +215,7 @@ const imageData = [
   },
   {
     id: 14,
-    url: "/14.webp",
+    url: "./public/14.webp",
     title: "",
     category: "bocetos",
     height: "334px",
@@ -223,7 +223,7 @@ const imageData = [
   },
   {
     id: 15,
-    url: "/15.webp",
+    url: "./public/15.webp",
     title: "Trueno",
     category: "bocetos",
     height: "257px",
@@ -231,7 +231,7 @@ const imageData = [
   },
   {
     id: 16,
-    url: "/16.webp",
+    url: "./public/16.webp",
     title: "Carlitos Tévez",
     category: "bocetos",
     height: "318px",
@@ -239,7 +239,7 @@ const imageData = [
   },
   {
     id: 17,
-    url: "/17.webp",
+    url: "./public/17.webp",
     title: "",
     category: "bocetos",
     height: "476px",
@@ -247,7 +247,7 @@ const imageData = [
   },
   {
     id: 18,
-    url: "/18.webp",
+    url: "./public/18.webp",
     title: "Lionel Messi | Copa América",
     category: "bocetos",
     height: "397px",
@@ -255,7 +255,7 @@ const imageData = [
   },
   {
     id: 19,
-    url: "/19.webp",
+    url: "./public/19.webp",
     title: "",
     category: "bocetos",
     height: "366px",
@@ -263,7 +263,7 @@ const imageData = [
   },
   {
     id: 20,
-    url: "/20.webp",
+    url: "./public/20.webp",
     title: "",
     category: "bocetos",
     height: "213px",
@@ -271,7 +271,7 @@ const imageData = [
   },
   {
     id: 21,
-    url: "/21.webp",
+    url: "./public/21.webp",
     title: "Fredy Mercury",
     category: "bocetos",
     height: "488px",
@@ -279,7 +279,7 @@ const imageData = [
   },
   {
     id: 22,
-    url: "/22.webp",
+    url: "./public/22.webp",
     title: "",
     category: "bocetos",
     height: "315px",
@@ -287,7 +287,7 @@ const imageData = [
   },
   {
     id: 23,
-    url: "/23.webp",
+    url: "./public/23.webp",
     title: "Potro",
     category: "bocetos",
     height: "442px",
@@ -295,7 +295,7 @@ const imageData = [
   },
   {
     id: 24,
-    url: "/24.webp",
+    url: "./public/24.webp",
     title: "Que se mejoren | Wos",
     category: "bocetos",
     height: "203px",
@@ -303,7 +303,7 @@ const imageData = [
   },
   {
     id: 25,
-    url: "/25.webp",
+    url: "./public/25.webp",
     title: "",
     category: "bocetos",
     height: "486px",
@@ -311,7 +311,7 @@ const imageData = [
   },
   {
     id: 26,
-    url: "/26.webp",
+    url: "./public/26.webp",
     title: "",
     category: "bocetos",
     height: "368px",
@@ -319,7 +319,7 @@ const imageData = [
   },
   {
     id: 27,
-    url: "/27.webp",
+    url: "./public/27.webp",
     title: "",
     category: "bocetos",
     height: "243px",
@@ -327,7 +327,7 @@ const imageData = [
   },
   {
     id: 28,
-    url: "/28.webp",
+    url: "./public/28.webp",
     title: "Búho",
     category: "bocetos",
     height: "474px",
@@ -335,7 +335,7 @@ const imageData = [
   },
   {
     id: 29,
-    url: "/29.webp",
+    url: "./public/29.webp",
     title: "Ángel",
     category: "bocetos",
     height: "276px",
@@ -343,7 +343,7 @@ const imageData = [
   },
   {
     id: 30,
-    url: "/30.webp",
+    url: "./public/30.webp",
     title: "",
     category: "bocetos",
     height: "467px",
@@ -354,7 +354,7 @@ const imageData = [
 const obras = [
   {
     id: 1,
-    url: "/16.webp",
+    url: "./public/16.webp",
     titulo: "Obra en venta 1",
     category: "obras-venta",
     price: 40000,
@@ -364,7 +364,7 @@ const obras = [
   },
   {
     id: 2,
-    url: "/13.webp",
+    url: "./public/13.webp",
     titulo: "Obra en venta 2",
     category: "obras-venta",
     price: 30000,
@@ -374,7 +374,7 @@ const obras = [
   },
   {
     id: 3,
-    url: "/6.webp",
+    url: "./public/6.webp",
     titulo: "Obra en venta 3",
     category: "obras-venta",
     price: 30000,
