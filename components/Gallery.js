@@ -28,17 +28,22 @@ const Gallery = ({ images, onImageClick }) => {
 
   // Intersection Observer para cargar más
   React.useEffect(() => {
+    let allowLoad = false;
+    const timeout = setTimeout(() => {
+      allowLoad = true;
+    }, 1000); // 1 segundo
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting) {
-          setVisibleCount((prev) => Math.min(prev + 10, images.length));
+        if (entry.isIntersecting && allowLoad) {
+          setVisibleCount((prev) => Math.min(prev + 5, images.length));
         }
       },
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.1,
+        threshold: 0.8,
       }
     );
 
@@ -47,6 +52,7 @@ const Gallery = ({ images, onImageClick }) => {
     }
 
     return () => {
+      clearTimeout(timeout);
       if (observerRef.current) {
         observer.unobserve(observerRef.current);
       }
