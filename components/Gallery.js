@@ -1,72 +1,109 @@
-// This component renders the Pinterest-style gallery
-
 const Gallery = ({ images, onImageClick }) => {
-  // Image loading state tracking
   const [loadedImages, setLoadedImages] = React.useState({});
+  const [visibleCount, setVisibleCount] = React.useState(10); // muestra 10 de entrada
+  const observerRef = React.useRef();
 
   const handleImageLoad = (id) => {
     setLoadedImages((prev) => ({
       ...prev,
-      [id]: true
+      [id]: true,
     }));
   };
 
-  // Format price as currency
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN'
+    return new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
     }).format(price);
   };
 
-  // Create WhatsApp link with message
   const createWhatsAppLink = (image) => {
-    const message = encodeURIComponent(`¡Hola! Estoy interesado en la obra "${image.title}" con precio ${formatPrice(image.price)}`);
+    const message = encodeURIComponent(
+      `¡Hola! Estoy interesado en la obra "${
+        image.title
+      }" con precio ${formatPrice(image.price)}`
+    );
     return `https://wa.me/${image.phone}?text=${message}`;
   };
 
+  // Intersection Observer para cargar más
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 10, images.length));
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [images.length]);
+
   return (
-    <div className="gallery-container" data-id="krp49o776" data-path="components/Gallery.js">
-      {images.map((image) =>
+    <div className="gallery-container">
+      {images.slice(0, visibleCount).map((image, idx) => (
         <div
           key={image.id}
-          className={`gallery-item ${image.category === 'obras-venta' ? 'for-sale' : ''}`}
+          className={`gallery-item ${
+            image.category === "obras-venta" ? "for-sale" : ""
+          }`}
           onClick={() => onImageClick(image)}
-          style={{ opacity: loadedImages[image.id] ? 1 : 0, transition: 'opacity 0.5s ease' }}
-          data-id="q60awjo7m"
-          data-path="components/Gallery.js">
-
-          {/* No exclusive badge */}
-
+          style={{
+            opacity: loadedImages[image.id] ? 1 : 0,
+            transition: "opacity 0.5s ease",
+          }}
+        >
           <img
             src={image.url}
             alt={image.title}
             onLoad={() => handleImageLoad(image.id)}
             loading="lazy"
-            data-id="e5nifna1e"
-            data-path="components/Gallery.js" />
+          />
 
-          <div className="image-details" data-id="074x7g2io" data-path="components/Gallery.js">
-            <h3 data-id="zz0joic3w" data-path="components/Gallery.js">{image.title}</h3>
+          <div className="image-details">
+            <h3>{image.title}</h3>
 
-            {image.category === 'obras-venta' ?
-              <div className="sale-details" data-id="y0lbnv7rk" data-path="components/Gallery.js">
-                <p className="price" data-id="ra2pdly2i" data-path="components/Gallery.js">{formatPrice(image.price)}</p>
+            {image.category === "obras-venta" ? (
+              <div className="sale-details">
+                <p className="price">{formatPrice(image.price)}</p>
                 <a
                   href={createWhatsAppLink(image)}
                   className="whatsapp-btn"
                   onClick={(e) => e.stopPropagation()}
                   target="_blank"
-                  rel="noopener noreferrer" data-id="3w4i24cba" data-path="components/Gallery.js">
-                  <i className="fab fa-whatsapp" data-id="u4yoqbuwj" data-path="components/Gallery.js"></i> Comprar
+                  rel="noopener noreferrer"
+                >
+                  <i className="fab fa-whatsapp"></i> Comprar
                 </a>
-              </div> :
-
-              <p data-id="4t5yhr9bs" data-path="components/Gallery.js">{image.category}</p>
-            }
+              </div>
+            ) : (
+              <p>{image.category}</p>
+            )}
           </div>
         </div>
-      )}
-    </div>);
+      ))}
 
+      {/* Div fantasma para IntersectionObserver */}
+      {visibleCount < images.length && (
+        <div
+          ref={observerRef}
+          style={{ height: "1px" }} // invisible pero observable
+        />
+      )}
+    </div>
+  );
 };
