@@ -60,6 +60,7 @@ export default function App() {
           images={filteredImages}
           onImageClick={handleImageClick}
           pageInfo={pageInfo}
+          activeObrasEnVenta={activeCategory === "obras-en-venta"}
         />
       </main>
 

@@ -5,11 +5,17 @@ interface GalleryProps {
   images: Image[];
   onImageClick: (image: Image) => void;
   pageInfo: PageInfo | undefined;
+  activeObrasEnVenta: boolean;
 }
 
 type LoadedImages = { [key: string]: boolean };
 
-export function Gallery({ images, onImageClick, pageInfo }: GalleryProps) {
+export function Gallery({
+  images,
+  onImageClick,
+  pageInfo,
+  activeObrasEnVenta,
+}: GalleryProps) {
   const [loadedImages, setLoadedImages] = useState<LoadedImages>({});
   const [visibleCount, setVisibleCount] = useState(10); // muestra 10 de entrada
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -97,7 +103,7 @@ export function Gallery({ images, onImageClick, pageInfo }: GalleryProps) {
           <div className="image-details">
             <h3>{image.title}</h3>
 
-            {image.category === "obras-venta" ? (
+            {image.category === "obras-en-venta" && activeObrasEnVenta ? (
               <div className="sale-details">
                 <p className="price">{formatPrice(image.price)}</p>
                 <a
@@ -107,7 +113,7 @@ export function Gallery({ images, onImageClick, pageInfo }: GalleryProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="fab fa-whatsapp"></i> Comprar
+                  Comprar
                 </a>
               </div>
             ) : (
