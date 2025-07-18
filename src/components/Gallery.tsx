@@ -1,24 +1,39 @@
 import { useEffect, useRef, useState } from "react";
 import type { Image, PageInfo } from "../services/database";
+import useSWR from "swr";
+import { getImages } from "../services/database";
+
+type CategoryId = "bocetos" | "obras-en-venta";
 
 interface GalleryProps {
-  images: Image[];
   onImageClick: (image: Image) => void;
   pageInfo: PageInfo | undefined;
-  activeObrasEnVenta: boolean;
+  activeCategory: CategoryId;
 }
 
 type LoadedImages = { [key: string]: boolean };
 
 export function Gallery({
-  images,
   onImageClick,
   pageInfo,
-  activeObrasEnVenta,
+  activeCategory,
 }: GalleryProps) {
+  const { data, isLoading } = useSWR("images", getImages);
   const [loadedImages, setLoadedImages] = useState<LoadedImages>({});
   const [visibleCount, setVisibleCount] = useState(10); // muestra 10 de entrada
   const observerRef = useRef<HTMLDivElement | null>(null);
+
+  const activeObrasEnVenta = activeCategory === "obras-en-venta";
+
+  const filteredImages = (() => {
+    if (data) {
+      return data.filter((image) => {
+        if (activeCategory !== "obras-en-venta") return true;
+        return image.category === "obras-en-venta";
+      });
+    }
+    return [];
+  })();
 
   const handleImageLoad = (id: Image["id"]) => {
     setLoadedImages((prev) => ({
@@ -57,7 +72,7 @@ export function Gallery({
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting && allowLoad) {
-          setVisibleCount((prev) => Math.min(prev + 5, images.length));
+          setVisibleCount((prev) => Math.min(prev + 5, filteredImages.length));
         }
       },
       {
@@ -77,54 +92,69 @@ export function Gallery({
         observer.unobserve(observerRef.current);
       }
     };
-  }, [images.length]);
+  }, [filteredImages.length]);
 
   return (
     <div className="gallery-container">
-      {images.slice(0, visibleCount).map((image) => (
-        <div
-          key={image.id}
-          className={`gallery-item ${
-            image.category === "obras-venta" ? "for-sale" : ""
-          }`}
-          onClick={() => onImageClick(image)}
-          style={{
-            opacity: loadedImages[image.id] ? 1 : 0,
-            transition: "opacity 0.5s ease",
-          }}
-        >
-          <img
-            src={image.public_url}
-            alt={image.title}
-            onLoad={() => handleImageLoad(image.id)}
-            loading="lazy"
-          />
+      {isLoading ? (
+        <>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+          <div className="w-full max-w-[400px] h-full max-h-[500px] bg-gray-200 rounded-xs animate-pulse"></div>
+        </>
+      ) : (
+        filteredImages.slice(0, visibleCount).map((image) => (
+          <div
+            key={image.id}
+            className={`rounded-[2px] overflow-hidden transition-all cursor-pointer max-h-max flex flex-col min-h-[300px] ${
+              image.category === "obras-venta" ? "for-sale" : ""
+            }`}
+            onClick={() => onImageClick(image)}
+            style={{
+              opacity: loadedImages[image.id] ? 1 : 0,
+              transition: "opacity 0.5s ease",
+            }}
+          >
+            <img
+              src={image.public_url}
+              alt={image.title}
+              onLoad={() => handleImageLoad(image.id)}
+              loading="lazy"
+            />
 
-          <div className="image-details">
-            <h3>{image.title}</h3>
+            <div className="image-details">
+              <h3>{image.title}</h3>
 
-            {image.category === "obras-en-venta" && activeObrasEnVenta ? (
-              <div className="sale-details">
-                <p className="price">{formatPrice(image.price)}</p>
-                <a
-                  href={createWhatsAppLink(image)}
-                  className="whatsapp-btn"
-                  onClick={(e) => e.stopPropagation()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Comprar
-                </a>
-              </div>
-            ) : (
-              <p>{image.category}</p>
-            )}
+              {image.category === "obras-en-venta" && activeObrasEnVenta ? (
+                <div className="sale-details">
+                  <p className="price">{formatPrice(image.price)}</p>
+                  <a
+                    href={createWhatsAppLink(image)}
+                    className="whatsapp-btn"
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Comprar
+                  </a>
+                </div>
+              ) : (
+                <p>{image.category}</p>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
 
       {/* Div fantasma para IntersectionObserver */}
-      {visibleCount < images.length && (
+      {visibleCount < filteredImages.length && (
         <div
           ref={observerRef}
           style={{ height: "1px" }} // invisible pero observable

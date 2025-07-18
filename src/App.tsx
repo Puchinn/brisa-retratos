@@ -1,29 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CategoryFilter } from "./components/CategoryFilter";
 import { Gallery } from "./components/Gallery";
 import { ImageModal } from "./components/ImageModal";
 
-import { getImages, getPageInfo } from "./services/database";
-import type { Image, PageInfo } from "./services/database";
+import { getPageInfo } from "./services/database";
+import type { Image } from "./services/database";
 
+import useSWR from "swr";
 type CategoryId = "bocetos" | "obras-en-venta";
 
 export default function App() {
+  const { data, isLoading, error } = useSWR("page-info", getPageInfo);
   const [activeCategory, setActiveCategory] = useState<CategoryId>("bocetos");
-  const [images, setImages] = useState<Image[]>([]);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [pageInfo, setPageInfo] = useState<PageInfo>();
-
   // Filter images based on active category
-  useEffect(() => {
-    getImages().then((imgs) => {
-      setImages(imgs);
-    });
 
-    getPageInfo().then((data) => {
-      setPageInfo(data);
-    });
-  }, [activeCategory]);
+  if (error) return "error";
+  if (!data && !isLoading) return "no se pudieron obtener los datos";
+  if (isLoading) return "";
+
+  const pageInfo = data;
 
   // Handle image click to show modal
   const handleImageClick = (image: Image) => {
@@ -34,11 +30,6 @@ export default function App() {
   const handleCloseModal = () => {
     setSelectedImage(null);
   };
-
-  const filteredImages = images.filter((image) => {
-    if (activeCategory !== "obras-en-venta") return true;
-    return image.category === "obras-en-venta";
-  });
 
   return (
     <div className="app-container">
@@ -57,10 +48,9 @@ export default function App() {
 
       <main className="py-4 px-4 md:px-8">
         <Gallery
-          images={filteredImages}
           onImageClick={handleImageClick}
           pageInfo={pageInfo}
-          activeObrasEnVenta={activeCategory === "obras-en-venta"}
+          activeCategory={activeCategory}
         />
       </main>
 
