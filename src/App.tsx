@@ -6,13 +6,18 @@ import { ImageModal } from "./components/ImageModal";
 import { getPageInfo } from "./services/database";
 import type { Image } from "./services/database";
 
+import { OrderWizard } from "./components/extracted-order";
+
 import useSWR from "swr";
+import { Button } from "./components/ui/button";
 type CategoryId = "bocetos" | "obras-en-venta";
 
 export default function App() {
   const { data, isLoading, error } = useSWR("page-info", getPageInfo);
   const [activeCategory, setActiveCategory] = useState<CategoryId>("bocetos");
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [open, setOpen] = useState(false);
+
   // Filter images based on active category
 
   if (error) return "error";
@@ -44,7 +49,17 @@ export default function App() {
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
+
+        <Button
+          onClick={function () {
+            setOpen(true);
+          }}
+          className="cursor-pointer p-3"
+        >
+          Hacer una orden
+        </Button>
       </header>
+      <OrderWizard open={open} onOpenChange={setOpen}></OrderWizard>
 
       <main className="py-4 px-4 md:px-8">
         <Gallery
@@ -53,11 +68,9 @@ export default function App() {
           activeCategory={activeCategory}
         />
       </main>
-
       {selectedImage && (
         <ImageModal image={selectedImage} onClose={handleCloseModal} />
       )}
-
       <footer className="py-8 text-center text-gray-500 text-sm">
         <div className="custom-work-section mb-6">
           <h3 className="text-xl mb-3 font-semibold">
@@ -74,7 +87,10 @@ export default function App() {
             <i className="fab fa-whatsapp mr-2"></i> Contáctame por WhatsApp
           </a>
         </div>
-        <p>© 2025 Dyman Studio. Todos los derechos reservados.</p>
+        <p>
+          © {new Date().getFullYear()} Dyman Studio. Todos los derechos
+          reservados.
+        </p>
       </footer>
     </div>
   );

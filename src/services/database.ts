@@ -35,4 +35,43 @@ const getPageInfo = async () => {
   return data as PageInfo;
 };
 
-export { getImages, getPageInfo };
+const uploadToPrivateBucket = async (
+  path: string,
+  token: string,
+  file: File,
+) => {
+  const { data, error } = await supabase.storage
+    .from("imagenes-privadas")
+    .uploadToSignedUrl(path, token, file);
+  if (error) throw error;
+  return data;
+};
+
+const imageExists = async (fileName: string) => {
+  const response = await supabase.storage.from("subir-fotos").exists(fileName);
+
+  return response;
+};
+
+const getImage = async (fileName: string) => {
+  const response = supabase.storage.from("subir-fotos").getPublicUrl(fileName);
+
+  return response;
+};
+
+const uploadToPublicBucket = async (file: File) => {
+  const res = await supabase.storage
+    .from("subir-fotos")
+    .upload(file.name, file);
+
+  return res.data;
+};
+
+export {
+  getImages,
+  getPageInfo,
+  uploadToPrivateBucket,
+  uploadToPublicBucket,
+  imageExists,
+  getImage,
+};
