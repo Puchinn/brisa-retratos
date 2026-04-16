@@ -35,8 +35,6 @@ export function Gallery({
     return [];
   })();
 
-  console.log(filteredImages);
-
   const handleImageLoad = (id: Image["id"]) => {
     setLoadedImages((prev) => ({
       ...prev,
