@@ -35,6 +35,8 @@ export function Gallery({
     return [];
   })();
 
+  console.log(filteredImages);
+
   const handleImageLoad = (id: Image["id"]) => {
     setLoadedImages((prev) => ({
       ...prev,
@@ -54,7 +56,7 @@ export function Gallery({
     const message = encodeURIComponent(
       `¡Hola! Estoy interesado en la obra "${
         image.title
-      }" con precio ${formatPrice(image.price ?? 0)}`
+      }" con precio ${formatPrice(image.price ?? 0)}`,
     );
     return `https://wa.me/${
       pageInfo?.phone_number || "+5493572444089"
@@ -79,7 +81,7 @@ export function Gallery({
         root: null,
         rootMargin: "0px",
         threshold: 0.8,
-      }
+      },
     );
 
     if (observerRef.current) {
@@ -123,7 +125,7 @@ export function Gallery({
             }}
           >
             <img
-              src={image.public_url}
+              src={`/images/${image.file_path}`}
               alt={image.title}
               onLoad={() => handleImageLoad(image.id)}
               loading="lazy"

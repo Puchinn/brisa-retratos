@@ -38,7 +38,7 @@ export function ImageModal({ image, onClose }: ImageModalProps) {
         </button>
         <div className="image-modal-image-container">
           <img
-            src={image.public_url}
+            src={`/images/${image.file_path}`}
             alt={image.title}
             className="image-modal-image"
           />
