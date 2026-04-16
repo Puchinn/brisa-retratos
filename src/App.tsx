@@ -9,7 +9,7 @@ import type { Image } from "./services/database";
 import { OrderWizard } from "./components/extracted-order";
 
 import useSWR from "swr";
-import { Button } from "./components/ui/button";
+// import { Button } from "./components/ui/button";
 type CategoryId = "bocetos" | "obras-en-venta";
 
 export default function App() {
@@ -50,14 +50,14 @@ export default function App() {
           setActiveCategory={setActiveCategory}
         />
 
-        <Button
+        {/* <Button
           onClick={function () {
             setOpen(true);
           }}
           className="cursor-pointer p-3"
         >
           Hacer una orden
-        </Button>
+        </Button> */}
       </header>
       <OrderWizard open={open} onOpenChange={setOpen}></OrderWizard>
 
